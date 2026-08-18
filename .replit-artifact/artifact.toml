@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Car Rental Georgia"
+description = "A full-stack car rental website for Georgia. Features a public catalog of rental cars with specs, pricing, and WhatsApp booking buttons, plus a password-protected admin dashboard for adding, editing, and removing cars. Backed by Supabase for real-time database storage."
+version = "1.0.0"
+id = "artifacts/car-rental"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22460
+
+[services.development]
+run = "pnpm --filter @workspace/car-rental run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/car-rental", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/car-rental/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22460"
+BASE_PATH = "/"
